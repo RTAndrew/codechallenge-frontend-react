@@ -1,0 +1,18 @@
+.root {
+  width: 90%;
+  margin: 0 auto;
+  padding: 3em;
+}
+
+.header {
+  margin-bottom: 2em !important;
+}
+
+.loadMoreButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .5em;
+  margin: 1.5em 0;
+  cursor: pointer;
+}
