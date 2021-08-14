@@ -8,13 +8,19 @@ interface ID {
   value: string;
 }
 
+interface Street {
+  name: string;
+  number: number;
+}
+
 interface Location {
-  street: string;
+  street: Street;
   city: string;
   state: string;
   postcode: string;
   coordinates: Coordinates;
   timezone: Timezone;
+  country: string;
 }
 
 interface Coordinates {
