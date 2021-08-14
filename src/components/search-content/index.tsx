@@ -1,7 +1,7 @@
 import { EyeOutlined, SyncOutlined } from '@ant-design/icons';
-import { Modal, Table, Typography } from 'antd';
+import { Input, Modal, Table, Typography } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { fetchUsers } from '../../services/users';
 import { IUser } from '../../types';
 import UserDetails from '../user-details';
@@ -11,9 +11,10 @@ import styles from './search-content.module.scss';
 const SearchContent = () => {
   const pagination = useRef(1);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<IUser | null>(null);
   const [loadingMore, setLoadingMore] = useState(false);
   const [data, setData] = useState<ReadonlyArray<IUser>>([]);
-  const [user, setUser] = useState<IUser | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const fetch = useCallback(async () => {
     try {
@@ -49,18 +50,31 @@ const SearchContent = () => {
     setUser(filteredUser);
   };
 
+  const filteredSearch = useMemo(() => {
+    if (searchQuery === '') return null;
+
+    const filteredByName = data.filter((i) =>
+      `${i.name.first} ${i.name.last}`.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+    const filteredByNationality = data.filter((i) =>
+      i.location.country.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+
+    return filteredByName.length > 0 ? filteredByName : filteredByNationality;
+  }, [data, searchQuery]);
+
   const columns: ColumnsType<IUser> = [
     {
       title: 'Name',
       dataIndex: 'name',
       render: (name: IUser['name']) => `${name.first} ${name.last}`,
-      width: '20%',
       sorter: (a: IUser, b: IUser): number =>
         `${a.name.first} ${a.name.last}`.localeCompare(`${b.name.first} ${b.name.last}`),
     },
     {
       title: 'Gênero',
       dataIndex: 'gender',
+      responsive: ['sm'],
       filters: [
         { text: 'Male', value: 'male' },
         { text: 'Female', value: 'female' },
@@ -71,6 +85,11 @@ const SearchContent = () => {
       title: 'Data de nascimento',
       dataIndex: ['dob', 'date'],
       render: (value: string | Date) => new Date(value).toLocaleDateString(),
+      responsive: ['sm'],
+    },
+    {
+      title: 'Nacionalidade',
+      dataIndex: ['location', 'country'],
     },
     {
       title: 'Acções',
@@ -91,17 +110,26 @@ const SearchContent = () => {
   }, [data.length, fetch]);
   return (
     <div className={styles.root}>
-      <Typography.Title level={5} className={styles.header}>
-        Start searching so you can get to know the worlds most famous users.
+      <Typography.Title level={5}>
+        Procure pelos os usuários mais famosos do mundo. 😏
       </Typography.Title>
+
+      <Input.Search
+        allowClear
+        size="large"
+        enterButton
+        className={styles.searchBar}
+        onSearch={(value) => setSearchQuery(value)}
+        placeholder="Digite o nome do usuário ou a nacionalidade"
+      />
 
       <Table
         sticky
         pagination={false}
         columns={columns}
-        dataSource={data}
+        dataSource={filteredSearch ?? data}
         loading={loading}
-        scroll={{ x: '100%' }}
+        scroll={{ x: 240 }}
         rowKey={(row) => row.email}
       />
 
