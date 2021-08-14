@@ -73,19 +73,19 @@ const SearchContent = () => {
     },
     {
       title: 'Gênero',
-      dataIndex: 'gender',
       responsive: ['sm'],
+      dataIndex: 'gender',
       filters: [
         { text: 'Male', value: 'male' },
         { text: 'Female', value: 'female' },
       ],
-      onFilter: (value, record) => record.gender.indexOf(String(value)) === 0,
+      onFilter: (gender, record) => record.gender.indexOf(String(gender)) === 0,
     },
     {
+      responsive: ['sm'],
       title: 'Data de nascimento',
       dataIndex: ['dob', 'date'],
-      render: (value: string | Date) => new Date(value).toLocaleDateString(),
-      responsive: ['sm'],
+      render: (dob: string | Date) => new Date(dob).toLocaleDateString(),
     },
     {
       title: 'Nacionalidade',
@@ -95,7 +95,7 @@ const SearchContent = () => {
       title: 'Acções',
       dataIndex: 'email',
       render: (email: string) => (
-        <EyeOutlined aria-label={`visualize-${email}`} onClick={() => onVisualize(email)} />
+        <EyeOutlined aria-label={`visualize-user-${email}`} onClick={() => onVisualize(email)} />
       ),
     },
   ];
@@ -125,12 +125,13 @@ const SearchContent = () => {
 
       <Table
         sticky
-        pagination={false}
-        columns={columns}
-        dataSource={filteredSearch ?? data}
+        size="large"
         loading={loading}
+        columns={columns}
+        pagination={false}
         scroll={{ x: 240 }}
         rowKey={(row) => row.email}
+        dataSource={filteredSearch ?? data}
       />
 
       <div onClick={fetchMore} className={styles.loadMoreButton}>
