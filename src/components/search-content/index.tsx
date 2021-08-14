@@ -1,9 +1,10 @@
-import { SyncOutlined } from '@ant-design/icons';
-import { Avatar, Table, Typography } from 'antd';
+import { EyeOutlined, SyncOutlined } from '@ant-design/icons';
+import { Modal, Table, Typography } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { fetchUsers } from '../../services/users';
 import { IUser } from '../../types';
+import UserDetails from '../user-details';
 
 import styles from './search-content.module.scss';
 
@@ -12,6 +13,7 @@ const SearchContent = () => {
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [data, setData] = useState<ReadonlyArray<IUser>>([]);
+  const [user, setUser] = useState<IUser | null>(null);
 
   const fetch = useCallback(async () => {
     try {
@@ -32,16 +34,13 @@ const SearchContent = () => {
     setLoadingMore(false);
   };
 
+  const onVisualize = (email: string) => {
+    const filteredUser = data.filter((i) => i.email === email)[0];
+    setUser(filteredUser);
+    console.log(filteredUser.name);
+  };
+
   const columns: ColumnsType<IUser> = [
-    {
-      title: ' ',
-      dataIndex: ['picture', 'thumbnail'],
-      render: (value: string) => <Avatar src={value} />,
-    },
-    {
-      title: 'ID',
-      dataIndex: ['id', 'value'],
-    },
     {
       title: 'Name',
       dataIndex: 'name',
@@ -51,17 +50,12 @@ const SearchContent = () => {
         `${a.name.first} ${a.name.last}`.localeCompare(`${b.name.first} ${b.name.last}`),
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-    },
-    {
       title: 'Gênero',
       dataIndex: 'gender',
       filters: [
         { text: 'Male', value: 'male' },
         { text: 'Female', value: 'female' },
       ],
-      width: '20%',
     },
     {
       title: 'Data de nascimento',
@@ -69,16 +63,11 @@ const SearchContent = () => {
       render: (value: string | Date) => new Date(value).toLocaleDateString(),
     },
     {
-      title: 'Telefone',
-      dataIndex: 'phone',
-    },
-    {
-      title: 'Nacionalidade',
-      dataIndex: ['location', 'state'],
-    },
-    {
-      title: 'Endereço',
-      dataIndex: ['location', 'street'],
+      title: 'Acções',
+      dataIndex: 'email',
+      render: (email: string) => (
+        <EyeOutlined aria-label={`visualize-${email}`} onClick={() => onVisualize(email)} />
+      ),
     },
   ];
 
@@ -105,6 +94,17 @@ const SearchContent = () => {
         <SyncOutlined spin={loadingMore} />
         <Typography.Link strong> Load more </Typography.Link>
       </div>
+
+      <Modal
+        closable
+        keyboard
+        maskClosable
+        footer={null}
+        visible={!!user}
+        onCancel={() => setUser(null)}
+      >
+        <UserDetails user={user!} />
+      </Modal>
     </div>
   );
 };
