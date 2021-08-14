@@ -18,26 +18,35 @@ const SearchContent = () => {
   const fetch = useCallback(async () => {
     try {
       setLoading(true);
-      const result = await fetchUsers(`?page=${pagination.current}&results=5`);
+      if (data.length < 1) {
+        for (let index = 1; index <= pagination.current; index++) {
+          const result = await fetchUsers(`?page=${index}&results=5&seed="codechallenge"`);
+          setData((prevState) => prevState.concat(result.parsedBody?.results ?? []));
+        }
+        return;
+      }
+
+      const result = await fetchUsers(`?page=${pagination.current}&results=5&seed="codechallenge"`);
       setData((prevState) => prevState.concat(result.parsedBody?.results ?? []));
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [data.length]);
 
   const fetchMore = async () => {
     pagination.current += 1;
     setLoadingMore(true);
     await fetch();
     setLoadingMore(false);
+    // eslint-disable-next-line no-restricted-globals
+    location.hash = `page=${pagination.current}`;
   };
 
   const onVisualize = (email: string) => {
     const filteredUser = data.filter((i) => i.email === email)[0];
     setUser(filteredUser);
-    console.log(filteredUser.name);
   };
 
   const columns: ColumnsType<IUser> = [
@@ -56,6 +65,7 @@ const SearchContent = () => {
         { text: 'Male', value: 'male' },
         { text: 'Female', value: 'female' },
       ],
+      onFilter: (value, record) => record.gender.indexOf(String(value)) === 0,
     },
     {
       title: 'Data de nascimento',
@@ -74,6 +84,9 @@ const SearchContent = () => {
   useEffect(() => {
     // prevent over fetching when rerendering
     if (data.length > 0) return;
+
+    // eslint-disable-next-line no-restricted-globals
+    if (location.hash) pagination.current = Number(location.hash.split('=')[1]);
     fetch();
   }, [data.length, fetch]);
   return (
@@ -83,10 +96,12 @@ const SearchContent = () => {
       </Typography.Title>
 
       <Table
+        sticky
         pagination={false}
         columns={columns}
         dataSource={data}
         loading={loading}
+        scroll={{ x: '100%' }}
         rowKey={(row) => row.email}
       />
 
