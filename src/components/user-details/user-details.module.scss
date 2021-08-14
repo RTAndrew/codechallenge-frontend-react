@@ -1,0 +1,23 @@
+.root {
+  position: relative;
+}
+
+.profilePicture {
+  width: auto;
+  height: 10em;
+  margin: 0 auto;
+  border-radius: 100%;
+
+  position: absolute;
+  top: -100px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+
+  padding-top: 80px;
+}
