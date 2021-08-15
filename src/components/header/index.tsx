@@ -9,7 +9,7 @@ const Header = () => {
         <Typography.Title level={4}> Generic Logo </Typography.Title>
       </div>
       <div className={styles.user}>
-        <Avatar shape="circle" icon={<UserOutlined />} />
+        <Avatar shape="circle" icon={<UserOutlined aria-label="user-profileImage" />} />
       </div>
     </div>
   );
