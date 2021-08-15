@@ -1,6 +1,8 @@
 import UserDetails from '.';
+import { mockUserData as mockData } from '../../mocks/user.mock';
 import { render, screen } from '../../test-suite';
-import { mockUserData } from './user-details.mock';
+
+const mockUserData = mockData[0];
 
 const makeSut = () => {
   render(<UserDetails user={mockUserData} />);

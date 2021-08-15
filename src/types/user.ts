@@ -17,7 +17,7 @@ interface Location {
   street: Street;
   city: string;
   state: string;
-  postcode: number;
+  postcode: string | number;
   coordinates: Coordinates;
   timezone: Timezone;
   country: string;

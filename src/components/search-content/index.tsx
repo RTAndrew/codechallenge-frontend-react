@@ -2,6 +2,7 @@ import { EyeOutlined, SyncOutlined } from '@ant-design/icons';
 import { Input, Modal, Table, Typography } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { config } from '../../config';
 import { fetchUsers } from '../../services/users';
 import { IUser } from '../../types';
 import UserDetails from '../user-details';
@@ -14,13 +15,15 @@ const SearchContent = () => {
   const [user, setUser] = useState<IUser | null>(null);
   const [data, setData] = useState<ReadonlyArray<IUser>>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState(false);
 
   const fetch = useCallback(async () => {
     try {
+      setError(false);
       setLoading(true);
       if (data.length < 1) {
         for (let index = 1; index <= pagination.current; index++) {
-          const result = await fetchUsers(`?page=${index}&results=5&seed="codechallenge"`);
+          const result = await fetchUsers(`?page=${index}&results=50&seed="codechallenge"`);
           setData((prevState) => prevState.concat(result.parsedBody?.results ?? []));
         }
         return;
@@ -29,7 +32,7 @@ const SearchContent = () => {
       const result = await fetchUsers(`?page=${pagination.current}&results=5&seed="codechallenge"`);
       setData((prevState) => prevState.concat(result.parsedBody?.results ?? []));
     } catch (error) {
-      console.log(error);
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -105,15 +108,15 @@ const SearchContent = () => {
     if (location.hash) pagination.current = Number(location.hash.split('=')[1]);
     fetch();
   }, [data.length, fetch]);
+
+  if (error) return <> Oops. We are facing some problems. 😞 </>;
+
   return (
     <div className={styles.root}>
       <span>
-        <Typography.Title level={5}>
-          Pharma Inc. is a unicorn company that manages over 1 billion of public and private medical
-          data, and, sooner or late, it expects to reach the moon. 🚀
-        </Typography.Title>
+        <Typography.Title level={5}> {config.Headline} </Typography.Title>
         <Typography.Title level={5} style={{ margin: 0 }}>
-          Start searching to get to know the world's most famous patients. 😏
+          {config.Motto}
         </Typography.Title>
       </span>
 
@@ -138,7 +141,7 @@ const SearchContent = () => {
       />
 
       <div onClick={fetchMore} className={styles.loadMoreButton}>
-        <SyncOutlined spin={loading} />
+        <SyncOutlined aria-label="loadmore-icon" spin={loading} />
         <Typography.Link strong> Load more </Typography.Link>
       </div>
 
@@ -146,6 +149,7 @@ const SearchContent = () => {
         closable
         keyboard
         maskClosable
+        destroyOnClose
         footer={null}
         visible={!!user}
         onCancel={() => setUser(null)}

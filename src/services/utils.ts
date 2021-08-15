@@ -4,6 +4,7 @@ interface HttpResponse<T> extends Response {
 
 const API_URL = 'https://randomuser.me/api/';
 
+// eslint-disable-next-line no-undef
 export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
   const response: HttpResponse<T> = await fetch(request);
   if (!response.ok) {
@@ -20,6 +21,7 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
 
 export async function getRequest<T>(
   path: string,
+  // eslint-disable-next-line no-undef
   args: RequestInit = {
     method: 'GET',
   },
