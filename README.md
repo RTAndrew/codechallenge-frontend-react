@@ -8,7 +8,7 @@ Access the link [here](https://rtandrew-coodesh-test.netlify.app/)
 ## Technical Resume
 This project is part of the Coodesh technical assessment, where I was tasked to create a web app that interacts with the [Random User API](https://randomuser.me/documentation) and helps users find patient's medical information.
 
-The project deadline was in 5 five days, but I managed to do it in 3 days, covering all the test cases in the application.
+The project deadline was in 5 days, but I managed to do it in 3 days, covering all the test cases in the application.
 
 For more information, please, have a look at the official [document.](https://lab.coodesh.com/insanityrodax/front-end-challenge-2021)
 
@@ -32,7 +32,25 @@ For more information, please, have a look at the official [document.](https://la
 
 
 ## How To Run
-- `git clone` - First clone this repo
-- cd into the project and run `npm install`
+```bash
+  git clone <repository> codechallenge-frontend-react
+```
+
+```bash
+  cd codechallenge-frontend-react
+```
+
+```bash
+  npm i
+```
+
+```bash
+  npm run dev
+```
+For testing (before pushing, it will automatically run the tests):
+
+```bash
+  npm run test
+```
 
 There is no `env` to be set. However, and if you would like to, you can change some of the configurations in `/src/config`.
