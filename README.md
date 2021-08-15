@@ -1,46 +1,38 @@
-# Getting Started with Create React App
+# Coodesh Front-End Challenge 🏅 2021
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Resume
+Pharma Inc. is a unicorn company that manages over 1 billion of public and private medical data, and, sooner or late, it expects to reach the moon. 🚀
 
-## Available Scripts
+Access the link [here](https://rtandrew-coodesh-test.netlify.app/)
 
-In the project directory, you can run:
+## Technical Resume
+This project is part of the Coodesh technical assessment, where I was tasked to create a web app that interacts with the [Random User API](https://randomuser.me/documentation) and helps users find patient's medical information.
 
-### `npm start`
+The project deadline was in 5 five days, but I managed to do it in 3 days, covering all the test cases in the application.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+For more information, please, have a look at the official [document.](https://lab.coodesh.com/insanityrodax/front-end-challenge-2021)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Project requirements
+- [x] Follow the proposed UI design
+- [x] Fetch user, add route pagination to allow link sharing
+- [x] Allow users to search the results based on `username` and `country`
+- [x] Allow sorting the results by `full name` and `gender`
+- [x] Implement `unit` and integration tests (currently the `test coverage is at 84.5%`)
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tech Stack
+- [x] React.js (CRA) + Typescript + [Ant Design](ant.design/)
+- [x] Git Workflow
+- [x] Jest + React Testing Library - For testing
+- [x] SASS modules
+- [x] [Git Commit Message Convention](https://github.com/RTAndrew/git-commit-message-convention)
+- [x] ESlint + Prettier
+- [x] Commit lint + Lint Staged
+- [x] Netlify
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How To Run
+- `git clone` - First clone this repo
+- cd into the project and run `npm install`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+There is no `env` to be set. However, and if you would like to, you can change some of the configurations in `/src/config`.
