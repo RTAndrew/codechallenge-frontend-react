@@ -1,10 +1,10 @@
 import { ConfigProvider } from 'antd';
 import { Header, SearchContent } from './components';
-import pt_PT from 'antd/lib/locale/pt_PT';
+import en_US from 'antd/lib/locale/en_US';
 const App = () => {
   return (
     <>
-      <ConfigProvider locale={pt_PT}>
+      <ConfigProvider locale={en_US}>
         <Header />
         <SearchContent />
       </ConfigProvider>

@@ -12,7 +12,6 @@ const SearchContent = () => {
   const pagination = useRef(1);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<IUser | null>(null);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [data, setData] = useState<ReadonlyArray<IUser>>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -38,9 +37,7 @@ const SearchContent = () => {
 
   const fetchMore = async () => {
     pagination.current += 1;
-    setLoadingMore(true);
     await fetch();
-    setLoadingMore(false);
     // eslint-disable-next-line no-restricted-globals
     location.hash = `page=${pagination.current}`;
   };
@@ -72,7 +69,7 @@ const SearchContent = () => {
         `${a.name.first} ${a.name.last}`.localeCompare(`${b.name.first} ${b.name.last}`),
     },
     {
-      title: 'Gênero',
+      title: 'Gender',
       responsive: ['sm'],
       dataIndex: 'gender',
       filters: [
@@ -83,16 +80,16 @@ const SearchContent = () => {
     },
     {
       responsive: ['sm'],
-      title: 'Data de nascimento',
+      title: 'Birthdate',
       dataIndex: ['dob', 'date'],
       render: (dob: string | Date) => new Date(dob).toLocaleDateString(),
     },
     {
-      title: 'Nacionalidade',
+      title: 'Country',
       dataIndex: ['location', 'country'],
     },
     {
-      title: 'Acções',
+      title: 'Actions',
       dataIndex: 'email',
       render: (email: string) => (
         <EyeOutlined aria-label={`visualize-user-${email}`} onClick={() => onVisualize(email)} />
@@ -110,9 +107,15 @@ const SearchContent = () => {
   }, [data.length, fetch]);
   return (
     <div className={styles.root}>
-      <Typography.Title level={5}>
-        Procure pelos os usuários mais famosos do mundo. 😏
-      </Typography.Title>
+      <span>
+        <Typography.Title level={5}>
+          Pharma Inc. is a unicorn company that manages over 1 billion of public and private medical
+          data, and, sooner or late, it expects to reach the moon. 🚀
+        </Typography.Title>
+        <Typography.Title level={5} style={{ margin: 0 }}>
+          Start searching to get to know the world's most famous patients. 😏
+        </Typography.Title>
+      </span>
 
       <Input.Search
         allowClear
@@ -120,7 +123,7 @@ const SearchContent = () => {
         enterButton
         className={styles.searchBar}
         onSearch={(value) => setSearchQuery(value)}
-        placeholder="Digite o nome do usuário ou a nacionalidade"
+        placeholder="Type the username or the country"
       />
 
       <Table
@@ -135,7 +138,7 @@ const SearchContent = () => {
       />
 
       <div onClick={fetchMore} className={styles.loadMoreButton}>
-        <SyncOutlined spin={loadingMore} />
+        <SyncOutlined spin={loading} />
         <Typography.Link strong> Load more </Typography.Link>
       </div>
 

@@ -1,7 +1,10 @@
 .root {
   width: 90%;
-  padding: 3em;
+  padding: 3em 0;
   margin: 0 auto;
+  @media (min-width: 1000px) {
+    width: 70%;
+  }
 }
 
 .searchBar {
@@ -10,7 +13,7 @@
 
 .loadMoreButton {
   display: flex;
-  gap: .5em;
+  gap: 0.5em;
   align-items: center;
   justify-content: center;
   margin: 1.5em 0;

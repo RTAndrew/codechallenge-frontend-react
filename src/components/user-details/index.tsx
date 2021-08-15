@@ -15,7 +15,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
       description: user.id.value,
     },
     {
-      label: 'Nome de usuário',
+      label: 'Username',
       description: user.login.username,
     },
 
@@ -26,7 +26,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
   ];
   const fields: ReadonlyArray<Field> = [
     {
-      label: 'Nome completo',
+      label: 'Full Name',
       description: `${user.name.first} ${user.name.last}`,
     },
     {
@@ -34,19 +34,19 @@ const UserDetails = ({ user }: UserDetailsProps) => {
       description: user.email,
     },
     {
-      label: 'Gênero',
+      label: 'Gender',
       description: user.gender,
     },
     {
-      label: 'Data de nascimento',
+      label: 'Birthdate',
       description: `${user.dob.age} anos, ${new Date(user.dob.date).toLocaleDateString()}`,
     },
     {
-      label: 'Telefone',
+      label: 'Phone',
       description: user.phone,
     },
     {
-      label: 'Nacionalidade',
+      label: 'Country',
       description: user.location.state,
     },
   ];
@@ -59,7 +59,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
         alt={`user-${user.email}-profile`}
       />
       <div className={styles.contentWrapper}>
-        <Typography.Title level={4}> Credencias </Typography.Title>
+        <Typography.Title level={4}> Credentials </Typography.Title>
         {credentials.map((i) => (
           <>
             <Space wrap>
@@ -73,7 +73,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
 
         <Divider />
 
-        <Typography.Title level={4}> Info. Geral </Typography.Title>
+        <Typography.Title level={4}> General Info. </Typography.Title>
         {fields.map((i) => (
           <>
             <Space wrap>
