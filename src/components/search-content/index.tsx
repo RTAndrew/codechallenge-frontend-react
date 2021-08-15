@@ -23,13 +23,17 @@ const SearchContent = () => {
       setLoading(true);
       if (data.length < 1) {
         for (let index = 1; index <= pagination.current; index++) {
-          const result = await fetchUsers(`?page=${index}&results=50&seed="codechallenge"`);
+          const result = await fetchUsers(
+            `?page=${index}&results=${config.ApiResultsPerPage}&seed="codechallenge"`,
+          );
           setData((prevState) => prevState.concat(result.parsedBody?.results ?? []));
         }
         return;
       }
 
-      const result = await fetchUsers(`?page=${pagination.current}&results=5&seed="codechallenge"`);
+      const result = await fetchUsers(
+        `?page=${pagination.current}&results=${config.ApiResultsPerPage}&seed="codechallenge"`,
+      );
       setData((prevState) => prevState.concat(result.parsedBody?.results ?? []));
     } catch (error) {
       setError(true);
