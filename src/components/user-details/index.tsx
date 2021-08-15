@@ -12,7 +12,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
   const credentials: ReadonlyArray<Field> = [
     {
       label: 'ID',
-      description: user.id.value,
+      description: user.id.value ?? '',
     },
     {
       label: 'Username',
@@ -39,7 +39,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
     },
     {
       label: 'Birthdate',
-      description: `${user.dob.age} anos, ${new Date(user.dob.date).toLocaleDateString()}`,
+      description: `${user.dob.age} years old, ${new Date(user.dob.date).toLocaleDateString()}`,
     },
     {
       label: 'Phone',
@@ -47,7 +47,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
     },
     {
       label: 'Country',
-      description: user.location.state,
+      description: user.location.country,
     },
   ];
 
@@ -60,29 +60,25 @@ const UserDetails = ({ user }: UserDetailsProps) => {
       />
       <div className={styles.contentWrapper}>
         <Typography.Title level={4}> Credentials </Typography.Title>
-        {credentials.map((i) => (
-          <>
-            <Space wrap>
-              <Typography.Title level={5} type="secondary">
-                {i.label}:
-              </Typography.Title>
-              <Typography.Title level={5}> {i.description} </Typography.Title>
-            </Space>
-          </>
+        {credentials.map((i, idx) => (
+          <Space wrap key={`${i.description}${idx}`}>
+            <Typography.Title level={5} type="secondary">
+              {i.label}:
+            </Typography.Title>
+            <Typography.Title level={5}> {i.description} </Typography.Title>
+          </Space>
         ))}
 
         <Divider />
 
         <Typography.Title level={4}> General Info. </Typography.Title>
-        {fields.map((i) => (
-          <>
-            <Space wrap>
-              <Typography.Title level={5} type="secondary">
-                {i.label}:
-              </Typography.Title>
-              <Typography.Title level={5}> {i.description} </Typography.Title>
-            </Space>
-          </>
+        {fields.map((i, idx) => (
+          <Space wrap key={`${i.description}${idx}`}>
+            <Typography.Title level={5} type="secondary">
+              {i.label}:
+            </Typography.Title>
+            <Typography.Title level={5}> {i.description} </Typography.Title>
+          </Space>
         ))}
       </div>
     </div>
