@@ -5,7 +5,7 @@ interface Birthdate {
 
 interface ID {
   name: string;
-  value: string;
+  value: string | null;
 }
 
 interface Street {
@@ -17,7 +17,7 @@ interface Location {
   street: Street;
   city: string;
   state: string;
-  postcode: string;
+  postcode: number;
   coordinates: Coordinates;
   timezone: Timezone;
   country: string;
